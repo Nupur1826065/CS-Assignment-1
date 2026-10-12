@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Assignment Portal | Nupur (BPT 1st Year)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #818cf8; }
+    </style>
+</head>
+<body class="h-full bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col">
+
+    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400 bg-clip-text text-transparent">
+                        Computer Fundamentals & System Design
+                    </h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                        Student: <span class="font-semibold text-slate-700 dark:text-slate-200">Nupur</span> | Roll No: <span class="font-semibold text-slate-700 dark:text-slate-200">1826065</span> | Course: <span class="font-semibold text-slate-700 dark:text-slate-200">BPT 1st Year</span>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleDarkMode()" aria-label="Toggle Theme" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-all shadow-sm">
+                    <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+                <div class="hidden sm:flex items-center space-x-2 bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-100 dark:border-indigo-900 px-3 py-1.5 rounded-xl text-indigo-700 dark:text-indigo-300 text-xs font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>Portal Active</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-full lg:w-72 shrink-0">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm sticky top-28">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 px-3">Navigation Menu</h2>
+                <nav class="space-y-1.5" id="nav-tabs">
+                    <button onclick="switchTab('dashboard')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 shadow-sm" data-tab="dashboard">
+                        <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                        <span>Dashboard Overview</span>
+                    </button>
+                    <button onclick="switchTab('tab1')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50" data-tab="tab1">
+                        <i class="fa-solid fa-microchip w-5 text-center"></i>
+                        <span>1. Computer Generations</span>
+                    </button>
+                    <button onclick="switchTab('tab2')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50" data-tab="tab2">
+                        <i class="fa-solid fa-sitemap w-5 text-center"></i>
+                        <span>2. Architecture & Data Flow</span>
+                    </button>
+                    <button onclick="switchTab('tab3')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50" data-tab="tab3">
+                        <i class="fa-solid fa-barcode w-5 text-center"></i>
+                        <span>3. Scanning & Card Readers</span>
+                    </button>
+                    <button onclick="switchTab('tab4')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50" data-tab="tab4">
+                        <i class="fa-solid fa-code w-5 text-center"></i>
+                        <span>4. Computer Languages</span>
+                    </button>
+                    <button onclick="switchTab('tab5')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50" data-tab="tab5">
+                        <i class="fa-solid fa-computer-mouse w-5 text-center"></i>
+                        <span>5. Input Precision & CAD</span>
+                    </button>
+                    <button onclick="switchTab('tab6')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50" data-tab="tab6">
+                        <i class="fa-solid fa-print w-5 text-center"></i>
+                        <span>6. Specialized Output Systems</span>
+                    </button>
+                    <button onclick="switchTab('tab7')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50" data-tab="tab7">
+                        <i class="fa-solid fa-microphone-lines w-5 text-center"></i>
+                        <span>7. Sensory Input Analysis</span>
+                    </button>
+                    <button onclick="switchTab('tab8')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50" data-tab="tab8">
+                        <i class="fa-solid fa-universal-access w-5 text-center"></i>
+                        <span>8. Assistive Workstation Design</span>
+                    </button>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 min-w-0">
+
+            <div id="dashboard" class="tab-content active space-y-6">
+                <!-- Student Profile Banner -->
+                <div class="bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                    <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                        <div>
+                            <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold mb-3">
+                                <i class="fa-solid fa-id-card"></i>
+                                <span>Academic Assignment Portal</span>
+                            </span>
+                            <h2 class="text-2xl md:text-3xl font-bold">Welcome back, Nupur!</h2>
+                            <p class="text-indigo-100 text-sm mt-1">Bachelor of Physiotherapy (BPT) — 1st Year | Roll Number: 1826065</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex items-center gap-4">
+                            <div class="text-center px-3 border-r border-white/20">
+                                <div class="text-2xl font-black">8</div>
+                                <div class="text-xs text-indigo-200 font-medium uppercase tracking-wider">Questions</div>
+                            </div>
+                            <div class="text-center px-3">
+                                <div class="text-2xl font-black">100%</div>
+                                <div class="text-xs text-indigo-200 font-medium uppercase tracking-wider">Completed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Navigation Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Card 1 -->
+                    <div onclick="switchTab('tab1')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 hover:shadow-lg transition-all cursor-pointer group">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-microchip text-lg"></i>
+                            </span>
+                            <span class="text-xs font-bold text-slate-400">Q1</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1 group-hover:text-indigo-600 transition-colors">Computer Characteristics & Hardware</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Primary characteristics of modern digital computers across five hardware generations.</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div onclick="switchTab('tab2')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 hover:shadow-lg transition-all cursor-pointer group">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="p-3 rounded-xl bg-violet-50 dark:bg-violet-950 text-violet-600 dark:text-violet-400 group-hover:bg-violet-600 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-sitemap text-lg"></i>
+                            </span>
+                            <span class="text-xs font-bold text-slate-400">Q2</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1 group-hover:text-violet-600 transition-colors">Architecture & Data Flow</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Block diagram analysis of CPU, Memory, and I/O communication pathways.</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div onclick="switchTab('tab3')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 hover:shadow-lg transition-all cursor-pointer group">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-barcode text-lg"></i>
+                            </span>
+                            <span class="text-xs font-bold text-slate-400">Q3</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1 group-hover:text-emerald-600 transition-colors">Scanning & Card Reading</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Real-world implementation of OMR, barcodes, and RFID in campus operations.</p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div onclick="switchTab('tab4')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 hover:shadow-lg transition-all cursor-pointer group">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 group-hover:bg-amber-600 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-code text-lg"></i>
+                            </span>
+                            <span class="text-xs font-bold text-slate-400">Q4</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1 group-hover:text-amber-600 transition-colors">Computer Language Categories</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Comparative breakdown of machine, assembly, and high-level languages.</p>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div onclick="switchTab('tab5')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 hover:shadow-lg transition-all cursor-pointer group">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="p-3 rounded-xl bg-rose-50 dark:bg-rose-950 text-rose-600 dark:text-rose-400 group-hover:bg-rose-600 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-computer-mouse text-lg"></i>
+                            </span>
+                            <span class="text-xs font-bold text-slate-400">Q5</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1 group-hover:text-rose-600 transition-colors">Input Precision & CAD</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Mouse & trackball versus graphics digitizers and drawing tablets.</p>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div onclick="switchTab('tab6')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 hover:shadow-lg transition-all cursor-pointer group">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="p-3 rounded-xl bg-cyan-50 dark:bg-cyan-950 text-cyan-600 dark:text-cyan-400 group-hover:bg-cyan-600 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-print text-lg"></i>
+                            </span>
+                            <span class="text-xs font-bold text-slate-400">Q6</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1 group-hover:text-cyan-600 transition-colors">Specialized Output Systems</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Technical trade-offs for civil engineering blueprint printing and rendering.</p>
+                    </div>
+
+                    <!-- Card 7 -->
+                    <div onclick="switchTab('tab7')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 hover:shadow-lg transition-all cursor-pointer group">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="p-3 rounded-xl bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-400 group-hover:bg-teal-600 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-microphone-lines text-lg"></i>
+                            </span>
+                            <span class="text-xs font-bold text-slate-400">Q7</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1 group-hover:text-teal-600 transition-colors">Sensory Input Analysis</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Facial recognition vs voice recognition in high-ambient-noise environments.</p>
+                    </div>
+
+                    <!-- Card 8 -->
+                    <div onclick="switchTab('tab8')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 hover:shadow-lg transition-all cursor-pointer group md:col-span-2 lg:col-span-1">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                                <i class="fa-solid fa-universal-access text-lg"></i>
+                            </span>
+                            <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/50 px-2 py-0.5 rounded-md">Synthesis</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1 group-hover:text-indigo-600 transition-colors">Assistive Workstation Design</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Accessible hands-free computer workstation synthesis for visually impaired users.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab1" class="tab-content space-y-6">
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
+                            <i class="fa-solid fa-microchip text-xl"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Assignment Question 1</span>
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Computer Characteristics & Hardware Across Generations</h2>
+                        </div>
+                    </div>
+
+                    <div class="prose dark:prose-invert max-w-none space-y-6 text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                        <div class="bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900 p-5 rounded-2xl">
+                            <h3 class="text-base font-bold text-indigo-900 dark:text-indigo-200 mb-2">Primary Characteristics of Modern Digital Computers</h3>
+                            <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-indigo-600 mt-1"></i>
+                                    <span><strong>Speed:</strong> Executes billions of operations per second (GHz clock speeds, parallel cores).</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-indigo-600 mt-1"></i>
+                                    <span><strong>Accuracy:</strong> Flawless computation following programmed logic without fatigue errors.</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-indigo-600 mt-1"></i>
+                                    <span><strong>Diligence:</strong> Capable of performing repetitive tasks indefinitely without monotony.</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-indigo-600 mt-1"></i>
+                                    <span><strong>Storage:</strong> Massive capacity for retaining data securely across primary and secondary tiers.</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <i class="fa-solid fa-check text-indigo-600 mt-1"></i>
+                                    <span><strong>Versatility:</strong> Adaptable across medical diagnosis, multimedia editing, and scientific simulation.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 pt-2">Evolution of Hardware Across Five Generations</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50/50 dark:bg-slate-900/50">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-bold text-indigo-600 dark:text-indigo-400">1st Generation (1940–1956)</span>
+                                    <span class="text-xs px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-700 font-medium">Vacuum Tubes</span>
+                                </div>
+                                <p class="text-xs">Utilized bulky vacuum tubes for circuitry and magnetic drums for memory. Highly expensive, consumed massive electricity, generated extreme heat, and required punch cards for input (e.g., ENIAC, UNIVAC).</p>
+                            </div>
+
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50/50 dark:bg-slate-900/50">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-bold text-indigo-600 dark:text-indigo-400">2nd Generation (1956–1963)</span>
+                                    <span class="text-xs px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-700 font-medium">Transistors</span>
+                                </div>
+                                <p class="text-xs">Replaced vacuum tubes with transistors, making computers smaller, faster, cheaper, more energy-efficient, and reliable. Introduction of assembly and early high-level languages like FORTRAN and COBOL.</p>
+                            </div>
+
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50/50 dark:bg-slate-900/50">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-bold text-indigo-600 dark:text-indigo-400">3rd Generation (1964–1971)</span>
+                                    <span class="text-xs px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-700 font-medium">Integrated Circuits (ICs)</span>
+                                </div>
+                                <p class="text-xs">Integrated circuits combining miniaturized transistors on silicon chips. Keyboards and monitors emerged alongside operating systems, allowing multiple applications to run simultaneously.</p>
+                            </div>
+
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50/50 dark:bg-slate-900/50">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-bold text-indigo-600 dark:text-indigo-400">4th Generation (1971–Present)</span>
+                                    <span class="text-xs px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-700 font-medium">Microprocessors (VLSI)</span>
+                                </div>
+                                <p class="text-xs">Very Large Scale Integration (VLSI) packed millions of components onto a single microprocessor chip. Birth of personal computers, laptops, internet connectivity, and mobile computing.</p>
+                            </div>
+
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50/50 dark:bg-slate-900/50">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-bold text-indigo-600 dark:text-indigo-400">5th Generation (Present & Beyond)</span>
+                                    <span class="text-xs px-2.5 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-medium">Artificial Intelligence (ULSI)</span>
+                                </div>
+                                <p class="text-xs">Based on Ultra Large Scale Integration (ULSI) and Artificial Intelligence. Features natural language processing, neural networks, quantum computing principles, and autonomous decision-making systems.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab2" class="tab-content space-y-6">
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="p-3 rounded-2xl bg-violet-50 dark:bg-violet-950 text-violet-600 dark:text-violet-400">
+                            <i class="fa-solid fa-sitemap text-xl"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">Assignment Question 2</span>
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Block Diagram of Computer & System Architecture</h2>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+                        <p class="leading-relaxed">
+                            The computer architecture model coordinates the flow of data, instructions, and control signals between the central processing unit (CPU), primary memory, and input/output (I/O) subsystems.
+                        </p>
+
+                        <!-- Visual System Architecture Diagram -->
+                        <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl space-y-6">
+                            <div class="text-center pb-2 border-b border-slate-800">
+                                <span class="text-xs font-bold uppercase tracking-widest text-indigo-400">Von Neumann Architecture Flow Diagram</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                                <!-- Input Devices -->
+                                <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center">
+                                    <i class="fa-solid fa-keyboard text-indigo-400 text-2xl mb-2"></i>
+                                    <h4 class="font-bold text-sm">Input Unit</h4>
+                                    <p class="text-[11px] text-slate-400 mt-1">Converts user data into binary signals</p>
+                                </div>
+
+                                <!-- CPU Box -->
+                                <div class="bg-indigo-950/80 border border-indigo-800 rounded-2xl p-5 space-y-4 shadow-lg text-center">
+                                    <h4 class="font-black text-indigo-300 text-sm tracking-wider">CENTRAL PROCESSING UNIT (CPU)</h4>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="bg-indigo-900/60 p-3 rounded-xl border border-indigo-700">
+                                            <span class="font-bold text-xs block text-white">ALU</span>
+                                            <span class="text-[10px] text-indigo-200">Arithmetic & Logic</span>
+                                        </div>
+                                        <div class="bg-indigo-900/60 p-3 rounded-xl border border-indigo-700">
+                                            <span class="font-bold text-xs block text-white">CU</span>
+                                            <span class="text-[10px] text-indigo-200">Control Unit</span>
+                                        </div>
+                                    </div>
+                                    <div class="bg-indigo-900/40 p-2 rounded-lg text-[11px] text-indigo-200">
+                                        Registers & Cache Memory
+                                    </div>
+                                </div>
+
+                                <!-- Output Devices -->
+                                <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center">
+                                    <i class="fa-solid fa-desktop text-violet-400 text-2xl mb-2"></i>
+                                    <h4 class="font-bold text-sm">Output Unit</h4>
+                                    <p class="text-[11px] text-slate-400 mt-1">Renders processed binary results</p>
+                                </div>
+                            </div>
+
+                            <!-- Memory Unit underneath -->
+                            <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center max-w-md mx-auto">
+                                <i class="fa-solid fa-memory text-emerald-400 text-xl mb-1"></i>
+                                <h4 class="font-bold text-sm">Primary Memory Unit (RAM / ROM)</h4>
+                                <p class="text-[11px] text-slate-400">Stores active programs and working datasets during execution</p>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Component Roles -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                            <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl">
+                                <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-2 flex items-center space-x-2">
+                                    <i class="fa-solid fa-arrows-split-up-and-left text-indigo-600"></i>
+                                    <span>Control Signals & Buses</span>
+                                </h4>
+                                <p class="text-xs leading-relaxed">The <strong>Control Unit (CU)</strong> directs the operation of the processor, managing the fetch-decode-execute cycle using three primary internal buses: Data Bus (carries actual data), Address Bus (specifies memory locations), and Control Bus (transmits timing and command signals).</p>
+                            </div>
+
+                            <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl">
+                                <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-2 flex items-center space-x-2">
+                                    <i class="fa-solid fa-calculator text-indigo-600"></i>
+                                    <span>ALU & Memory Interaction</span>
+                                </h4>
+                                <p class="text-xs leading-relaxed">The <strong>Arithmetic Logic Unit (ALU)</strong> performs mathematical calculations (addition, subtraction) and logical evaluations (AND, OR, comparisons). Data is retrieved from RAM into CPU registers, processed by the ALU, and written back or sent to output devices.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab3" class="tab-content space-y-6">
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400">
+                            <i class="fa-solid fa-barcode text-xl"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Assignment Question 3</span>
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Scanning & Card Reading Hardware in Campus Operations</h2>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+                        <p class="leading-relaxed">
+                            Modern educational and clinical institutions leverage automated data capture hardware to streamline administrative overhead, eliminate manual entry errors, and secure campus facilities. Below is an analysis of OMR, barcode scanners, and RFID/smart card readers in campus attendance and library systems.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                            <!-- OMR -->
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-5 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col justify-between">
+                                <div>
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
+                                        <i class="fa-solid fa-file-lines"></i>
+                                    </div>
+                                    <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-2">OMR (Optical Mark Recognition)</h3>
+                                    <p class="text-xs leading-relaxed mb-4">Detects predefined pencil or pen marks on specially printed paper templates by measuring reflected light intensity.</p>
+                                </div>
+                                <div class="bg-emerald-50 dark:bg-emerald-950/40 p-3 rounded-xl border border-emerald-100 dark:border-emerald-900 text-xs text-emerald-900 dark:text-emerald-200">
+                                    <strong>Campus Use:</strong> Bulk examination grading and large-scale student assessment sheets.
+                                </div>
+                            </div>
+
+                            <!-- Barcode -->
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-5 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col justify-between">
+                                <div>
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
+                                        <i class="fa-solid fa-barcode"></i>
+                                    </div>
+                                    <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-2">Barcode Scanners</h3>
+                                    <p class="text-xs leading-relaxed mb-4">Uses laser beams or CCD sensors to read linear patterns of parallel dark bars and spaces corresponding to encoded alphanumeric strings.</p>
+                                </div>
+                                <div class="bg-emerald-50 dark:bg-emerald-950/40 p-3 rounded-xl border border-emerald-100 dark:border-emerald-900 text-xs text-emerald-900 dark:text-emerald-200">
+                                    <strong>Campus Use:</strong> Library book checkouts, inventory tracking, and equipment rentals.
+                                </div>
+                            </div>
+
+                            <!-- RFID & Smart Cards -->
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-5 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col justify-between">
+                                <div>
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
+                                        <i class="fa-solid fa-id-card-clip"></i>
+                                    </div>
+                                    <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-2">RFID & Smart Card Readers</h3>
+                                    <p class="text-xs leading-relaxed mb-4">Employs radio frequency electromagnetic fields or embedded microprocessor chips to transmit unique identification data wirelessly.</p>
+                                </div>
+                                <div class="bg-emerald-50 dark:bg-emerald-950/40 p-3 rounded-xl border border-emerald-100 dark:border-emerald-900 text-xs text-emerald-900 dark:text-emerald-200">
+                                    <strong>Campus Use:</strong> Automated hostel attendance, turnstile gate entry, and cashless cafeteria payments.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab4" class="tab-content space-y-6">
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400">
+                            <i class="fa-solid fa-code text-xl"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Assignment Question 4</span>
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Comparative Breakdown of Computer Language Categories</h2>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+                        <p class="leading-relaxed">
+                            Computer languages bridge human intent with hardware execution. They are classified into three primary tiers based on abstraction, execution speed, hardware dependence, and translation requirements.
+                        </p>
+
+                        <!-- Comparison Table -->
+                        <div class="overflow-x-auto border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700">
+                                        <th class="p-4 font-bold">Category</th>
+                                        <th class="p-4 font-bold">Execution Speed</th>
+                                        <th class="p-4 font-bold">Hardware Dependence</th>
+                                        <th class="p-4 font-bold">Translation Mechanism</th>
+                                        <th class="p-4 font-bold">Complexity</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                                    <tr>
+                                        <td class="p-4 font-bold text-slate-900 dark:text-slate-100">Machine Language (1st Gen)</td>
+                                        <td class="p-4 text-emerald-600 font-semibold">Maximum (Direct)</td>
+                                        <td class="p-4 text-rose-600 font-semibold">Absolute (Machine Specific)</td>
+                                        <td class="p-4">None Required</td>
+                                        <td class="p-4">Extremely High (Binary 0s and 1s)</td>
+                                    </tr>
+                                    <tr class="bg-slate-50/50 dark:bg-slate-900/30">
+                                        <td class="p-4 font-bold text-slate-900 dark:text-slate-100">Assembly Language (2nd Gen)</td>
+                                        <td class="p-4 text-emerald-500 font-semibold">Very High</td>
+                                        <td class="p-4 text-rose-500 font-semibold">High (Architecture Specific)</td>
+                                        <td class="p-4">Assembler</td>
+                                        <td class="p-4">High (Mnemonics like ADD, MOV)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-4 font-bold text-slate-900 dark:text-slate-100">High-Level Language (3rd+ Gen)</td>
+                                        <td class="p-4 text-amber-600 font-semibold">Moderate to Fast</td>
+                                        <td class="p-4 text-emerald-600 font-semibold">Platform Independent</td>
+                                        <td class="p-4">Compiler / Interpreter</td>
+                                        <td class="p-4">Low (English-like syntax, e.g., Python)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                            <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl">
+                                <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-2">Machine Language</h4>
+                                <p class="text-xs leading-relaxed">Composed entirely of binary instruction codes directly executed by the CPU. Impossible for humans to write efficiently without errors.</p>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl">
+                                <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-2">Assembly Language</h4>
+                                <p class="text-xs leading-relaxed">Replaces binary with short mnemonic abbreviations. Requires an assembler program to convert instructions into machine code before execution.</p>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl">
+                                <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-2">High-Level Language</h4>
+                                <p class="text-xs leading-relaxed">Uses structured English-like statements (e.g., Python, C++, Java). Translated into machine code via compilers or executed line-by-line via interpreters.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab5" class="tab-content space-y-6">
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="p-3 rounded-2xl bg-rose-50 dark:bg-rose-950 text-rose-600 dark:text-rose-400">
+                            <i class="fa-solid fa-computer-mouse text-xl"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">Assignment Question 5</span>
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Input Precision & Operational Mechanisms in CAD & Digital Art</h2>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+                        <p class="leading-relaxed">
+                            Different tasks demand specialized input mechanisms. Below is a critical comparison between relative pointing devices (mice and trackballs) and absolute coordinate devices (graphics digitizers and drawing tablets) used in Computer-Aided Design (CAD) and digital illustration.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Mouse & Trackball -->
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-5 bg-slate-50/50 dark:bg-slate-900/50 space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="p-3 rounded-xl bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400">
+                                        <i class="fa-solid fa-computer-mouse"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-slate-900 dark:text-slate-100">Mouse & Trackball</h3>
+                                        <span class="text-xs text-rose-600 dark:text-rose-400 font-medium">Relative Positioning</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs leading-relaxed">
+                                    Mice and trackballs measure relative displacement from the previous cursor position. While excellent for general graphical user interface (GUI) navigation, office productivity, and casual browsing, they lack the physical mapping required for organic sketching.
+                                </p>
+                                <ul class="space-y-2 text-xs">
+                                    <li class="flex items-center space-x-2 text-slate-600 dark:text-slate-400">
+                                        <i class="fa-solid fa-circle-xmark text-rose-500"></i>
+                                        <span>No pressure sensitivity for stroke weight variation.</span>
+                                    </li>
+                                    <li class="flex items-center space-x-2 text-slate-600 dark:text-slate-400">
+                                        <i class="fa-solid fa-circle-xmark text-rose-500"></i>
+                                        <span>Hand fatigue during prolonged freehand technical drafting.</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Graphics Digitizers & Drawing Tablets -->
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-5 bg-slate-50/50 dark:bg-slate-900/50 space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="p-3 rounded-xl bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400">
+                                        <i class="fa-solid fa-pen-nib"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-slate-900 dark:text-slate-100">Graphics Digitizers & Tablets</h3>
+                                        <span class="text-xs font-semibold text-emerald-600">Absolute Positioning & Pressure Sensitive</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs leading-relaxed">
+                                    Drawing tablets map every point on the active tablet surface directly to a corresponding coordinate on the display screen (absolute positioning). Equipped with electromagnetic styluses detecting thousands of pressure levels and tilt angles.
+                                </p>
+                                <ul class="space-y-2 text-xs">
+                                    <li class="flex items-center space-x-2 text-slate-600 dark:text-slate-400">
+                                        <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                        <span>Essential for precise CAD blueprint tracing and organic digital art.</span>
+                                    </li>
+                                    <li class="flex items-center space-x-2 text-slate-600 dark:text-slate-400">
+                                        <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                        <span>Natural pen-on-paper ergonomics minimizing repetitive strain injuries.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab6" class="tab-content space-y-6">
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="p-3 rounded-2xl bg-cyan-50 dark:bg-cyan-950 text-cyan-600 dark:text-cyan-400">
+                            <i class="fa-solid fa-print text-xl"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">Assignment Question 6</span>
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Technical Trade-offs Between Specialized Output Systems</h2>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+                        <p class="leading-relaxed">
+                            When producing large-scale architectural and civil engineering blueprints, output fidelity, line precision, and cost dictate hardware selection. Below is an assessment comparing traditional drum/flatbed plotters with modern ultra-HD monitors paired with large-format inkjet plotters.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Drum / Flatbed Plotters -->
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-5 bg-slate-50/50 dark:bg-slate-900/50 space-y-3">
+                                <h3 class="font-bold text-slate-900 dark:text-slate-100 text-base">Traditional Drum & Flatbed Plotters</h3>
+                                <p class="text-xs leading-relaxed">
+                                    Plotters utilize mechanical pens or cutting blades driven across paper via micro-stepper motors.
+                                </p>
+                                <div class="space-y-2 text-xs pt-2">
+                                    <div class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-plus text-emerald-500 mt-0.5"></i>
+                                        <span><strong>Pro:</strong> Flawless vector line accuracy without pixelation; permanent archival ink drawings on vellum or mylar.</span>
+                                    </div>
+                                    <div class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-minus text-rose-500 mt-0.5"></i>
+                                        <span><strong>Con:</strong> Extremely slow multi-pen color plotting; mechanical wear and tear; unable to render complex photographic gradients smoothly.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ultra-HD Monitor + Large Format Inkjet -->
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-5 bg-slate-50/50 dark:bg-slate-900/50 space-y-3">
+                                <h3 class="font-bold text-slate-900 dark:text-slate-100 text-base">Ultra-HD Monitor + Large-Format Inkjet Plotter</h3>
+                                <p class="text-xs leading-relaxed">
+                                    Combines high-resolution digital previews on color-calibrated 4K/8K displays with piezoelectric inkjet printing.
+                                </p>
+                                <div class="space-y-2 text-xs pt-2">
+                                    <div class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-plus text-emerald-500 mt-0.5"></i>
+                                        <span><strong>Pro:</strong> Photorealistic color rendering, shading, GIS orthographic imagery, and rapid high-speed production.</span>
+                                    </div>
+                                    <div class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-minus text-rose-500 mt-0.5"></i>
+                                        <span><strong>Con:</strong> High consumable costs (specialized inks and media); requires strict color calibration management.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab7" class="tab-content space-y-6">
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="p-3 rounded-2xl bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-400">
+                            <i class="fa-solid fa-microphone-lines text-xl"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">Assignment Question 7</span>
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Critical Analysis of Sensory Input Devices Under Adverse Conditions</h2>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+                        <p class="leading-relaxed">
+                            Biometric and sensory input systems deployed in public environments face severe environmental interference. Below is a critical comparison of <strong>Facial Recognition</strong> versus <strong>Voice Recognition</strong> when operating in high-ambient-noise, public spaces.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Facial Recognition -->
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-5 bg-slate-50/50 dark:bg-slate-900/50 space-y-3">
+                                <h3 class="font-bold text-slate-900 dark:text-slate-100 text-base">Facial Recognition Systems</h3>
+                                <p class="text-xs leading-relaxed">
+                                    Relies on optical camera captures and infrared dot projection to map facial geometry.
+                                </p>
+                                <div class="space-y-2 text-xs pt-2">
+                                    <div class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-triangle-exclamation text-amber-500 mt-0.5"></i>
+                                        <span><strong>Vulnerabilities:</strong> Severe lighting fluctuations (glare, deep shadows, darkness), facial occlusions (masks, scarves, sunglasses), and crowd congestion.</span>
+                                    </div>
+                                    <div class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-shield text-indigo-500 mt-0.5"></i>
+                                        <span><strong>Privacy Concern:</strong> Continuous passive surveillance without explicit user consent.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Voice Recognition -->
+                            <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-5 bg-slate-50/50 dark:bg-slate-900/50 space-y-3">
+                                <h3 class="font-bold text-slate-900 dark:text-slate-100 text-base">Voice Recognition Systems</h3>
+                                <p class="text-xs leading-relaxed">
+                                    Relies on microphone arrays and acoustic signal processing to capture vocal commands.
+                                </p>
+                                <div class="space-y-2 text-xs pt-2">
+                                    <div class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-triangle-exclamation text-amber-500 mt-0.5"></i>
+                                        <span><strong>Vulnerabilities:</strong> High ambient noise (traffic, sirens, background chatter), acoustic reverberation in open rooms, and speaker fatigue or illness (laryngitis).</span>
+                                    </div>
+                                    <div class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-shield text-indigo-500 mt-0.5"></i>
+                                        <span><strong>Privacy Concern:</strong> Accidental eavesdropping and vulnerability to audio spoofing attacks.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-teal-50/50 dark:bg-teal-950/30 border border-teal-100 dark:border-teal-900 p-4 rounded-2xl text-xs leading-relaxed">
+                            <strong>Conclusion:</strong> In chaotic, noisy public terminals, both systems suffer degradation. Multimodal fusion (combining restricted proximity card tap with secondary PIN or localized directional microphone arrays) is necessary for robust real-world reliability.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab8" class="tab-content space-y-6">
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <span class="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
+                            <i class="fa-solid fa-universal-access text-xl"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Assignment Question 8 & Synthesis</span>
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Accessible, Hands-Free Computer Workstation for Visually Impaired Users</h2>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 text-sm text-slate-600 dark:text-slate-300">
+                        <p class="leading-relaxed">
+                            This system design integrates non-visual input devices with specialized output hardware to construct a completely accessible, hands-free workstation tailored for a visually impaired professional or student.
+                        </p>
+
+                        <!-- System Architecture Blueprint Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Non-Visual Input Devices -->
+                            <div class="border border-indigo-200 dark:border-indigo-900 rounded-2xl p-5 bg-indigo-50/30 dark:bg-indigo-950/20 space-y-4">
+                                <h3 class="font-bold text-indigo-900 dark:text-indigo-200 text-base flex items-center space-x-2">
+                                    <i class="fa-solid fa-hand-pointer text-indigo-600"></i>
+                                    <span>Non-Visual Input Integration</span>
+                                </h3>
+                                <ul class="space-y-3 text-xs">
+                                    <li class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-indigo-100 dark:border-indigo-900">
+                                        <strong>Advanced Wake-Word Voice Recognition:</strong> Localized noise-canceling microphone array running deep-learning speech-to-text models for hands-free navigation and dictation.
+                                    </li>
+                                    <li class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-indigo-100 dark:border-indigo-900">
+                                        <strong>Tactile & Braille Keyboards:</strong> Ergonomic mechanical keyboard equipped with Braille keycaps and programmable macro keys for shortcut execution.
+                                    </li>
+                                    <li class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-indigo-100 dark:border-indigo-900">
+                                        <strong>Foot Pedal Array & Gesture Sensors:</strong> USB triple-pedal foot switch mapped for quick actions (mute audio, toggle dictation, enter/return) to reduce hand strain.
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Specialized Output Devices -->
+                            <div class="border border-violet-200 dark:border-violet-900 rounded-2xl p-5 bg-violet-50/30 dark:bg-violet-950/20 space-y-4">
+                                <h3 class="font-bold text-violet-900 dark:text-violet-200 text-base flex items-center space-x-2">
+                                    <i class="fa-solid fa-volume-high text-violet-600"></i>
+                                    <span>Specialized Output Integration</span>
+                                </h3>
+                                <ul class="space-y-3 text-xs">
+                                    <li class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-violet-100 dark:border-violet-900">
+                                        <strong>Spatial Voice Response Synthesizers:</strong> Multi-channel text-to-speech (TTS) engine rendering screen notifications and document structures with directional 3D audio cues.
+                                    </li>
+                                    <li class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-violet-100 dark:border-violet-900">
+                                        <strong>Refreshable Braille Display (40/80 Cell):</strong> Piezoelectric tactile strip rendering real-time line-by-line Braille translation for proofreading code and text.
+                                    </li>
+                                    <li class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-violet-100 dark:border-violet-900">
+                                        <strong>Screen Reader Integration:</strong> Fully integrated NVDA/JAWS screen reader architecture optimizing markup semantics andARIA attributes for seamless navigation.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Workstation Simulator -->
+                        <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Interactive Assistive Workstation Simulator</span>
+                                <span id="sim-status" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-medium">Ready</span>
+                            </div>
+                            <p class="text-xs text-slate-300">Test simulated workstation assistive feedback channels:</p>
+                            
+                            <div class="flex flex-wrap gap-3 pt-2">
+                                <button onclick="triggerSim('voice')" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs transition-all shadow-sm flex items-center space-x-2">
+                                    <i class="fa-solid fa-microphone"></i>
+                                    <span>Simulate Voice Command</span>
+                                </button>
+                                <button onclick="triggerSim('braille')" class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-medium text-xs transition-all shadow-sm flex items-center space-x-2">
+                                    <i class="fa-solid fa-hands"></i>
+                                    <span>Refresh Braille Output</span>
+                                </button>
+                                <button onclick="triggerSim('tts')" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs transition-all shadow-sm flex items-center space-x-2">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                    <span>Test Screen Reader TTS</span>
+                                </button>
+                            </div>
+
+                            <div id="sim-output" class="bg-slate-800 border border-slate-700 p-4 rounded-xl text-xs font-mono text-indigo-300 min-h-[60px] flex items-center">
+                                [System Log]: Workstation initialized. Awaiting user input or voice prompt...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Tab switching logic
+        function switchTab(tabId) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Remove active style from all nav buttons
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => {
+                btn.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-950/60', 'shadow-sm');
+                btn.classList.add('text-slate-600', 'dark:text-slate-400');
+            });
+
+            // Show target tab
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+
+            // Highlight target nav button
+            const targetBtn = document.querySelector(`[data-tab="${tabId}"]`);
+            if (targetBtn) {
+                targetBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+                targetBtn.classList.add('text-indigo-600', 'dark:text-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-950/60', 'shadow-sm');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            html.classList.toggle('dark');
+            
+            if (html.classList.contains('dark')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+
+        // Simulator interactive function for Tab 8
+        function triggerSim(type) {
+            const outputBox = document.getElementById('sim-output');
+            const statusBox = document.getElementById('sim-status');
+            
+            statusBox.textContent = "Processing...";
+            statusBox.className = "text-xs px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-400 font-medium animate-pulse";
+
+            setTimeout(() => {
+                if (type === 'voice') {
+                    outputBox.textContent = "[Voice Input]: Detected command 'Open Assignment Document'. Executing action via local speech model.";
+                } else if (type === 'braille') {
+                    outputBox.textContent = "[Braille Output]: Refreshed 40-cell piezoelectric strip: 'Nupur - BPT 1st Year Assignment Module active.'";
+                } else if (type === 'tts') {
+                    outputBox.textContent = "[Screen Reader TTS]: Synthesizing audio: 'System ready. Navigating to assistive workstation synthesis parameters.'";
+                }
+                statusBox.textContent = "Ready";
+                statusBox.className = "text-xs px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-medium";
+            }, 500);
+        }
+    </script>
+</body>
+</html>
